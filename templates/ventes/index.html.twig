@@ -1,27 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Ventes{% endblock %}
 
 {% block body %}
-<style>
-</style>
+
 <div class="container-fluid col-10">
     <div class="row text-center">
-        <h1>Bienvenue sur Cars 2022</h1>
+        <h1>Bienvenue sur cars 2022 - Ventes</h1>
     </div>
 
-<div class="row">
-    {% for marque in marques %}
+
     
-            <div class="col-md-3 text-white">
-                <div class="card bg-dark mb-4">
+    {# for marque #}
+    <div class="row">
+   
+    
+            <div class="col-md-3">
+                <div class="card bg-dark mb-3">
                     <div class="card-header text-center">
-                        <strong>{{marque.nom}}</strong> 
+                        <strong>...</strong> 
                     </div>
-                    <img src="{{marque.cover}}" class="rounded mx-auto d-block" width="250" height="250" alt="Image de la marque" class="starsimg">
+                    <img src="#" class="rounded mx-auto d-block" width="200" height="200" alt="Image de la voiture" class="starsimg">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            Notre gamme {{marque.nom}}
+                            Notre gamme ....
                         </div>
                         <p class="card-text">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, earum modi! Dolorem at exercitationem sapiente optio aliquam blanditiis.
@@ -34,7 +36,13 @@
             </div>  
         
      
-    {% endfor %}
+    
     </div>
-    </div>
+    
+        
+
+
+        
+</div>            
+
 {% endblock %}
