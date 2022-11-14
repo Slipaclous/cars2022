@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MarquesRepository;
+use App\Entity\Voitures;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,7 +23,7 @@ class Marques
     #[ORM\Column(type: Types::TEXT)]
     private ?string $cover = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_marque', targetEntity: Voitures::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'marque_id', targetEntity: Voitures::class, orphanRemoval: true)]
     private Collection $voitures;
 
     public function __construct()

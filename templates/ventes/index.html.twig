@@ -14,23 +14,31 @@
     {# for marque #}
     <div class="row">
    
+        
     
+    {% for voiture in voiture %}
+    
+        
             <div class="col-md-3 text-white">
                 <div class="card bg-dark mb-3">
                     <div class="card-header text-center">
-                        <strong>...</strong> 
+                   
+                        
+                            {{voiture.idMarque.nom}}
+                    
+                        <strong> </strong> 
                     </div>
-                    <img src="#" class="rounded mx-auto d-block" width="200" height="200" alt="Image de l'voiture" class="starsimg">
+                    <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block" width="200" height="200" alt="Image de l'voiture" class="starsimg">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            modele : <strong>....</strong>
+                            modele : <strong>{{voiture.modele}}</strong>
                         </div>
                         <p class="card-text">
-                            <p>KM : ... </p>
-                            <p>Puissance : ...</p>
-                            <p>carburant : ...</p>
-                            <p>Année : ...</p>
-                            <p>Prix : ...</p>
+                            <p>KM :{{voiture.km}}</p>
+                            <p>Puissance : {{voiture.puissance}}</p>
+                            <p>Carburant : {{voiture.carburant}}</p>
+                            <p>Année : {{voiture.anneeCirculation | date('d/m/Y')}}</p>
+                            <p>Prix : {{voiture.prix}} €</p>
                         </p>
                         <div class="text-center">
                         <a href="#" class="btn btn-secondary">Découvrire la voiture</a>
@@ -38,7 +46,11 @@
                     </div>
                 </div>
             </div> 
-        
+    {% endfor %}
+        <div class="navigation d-flex justify-content-center">
+        </div>
+ 
+            {{knp_pagination_render(voiture)}}
      
     
     </div>
