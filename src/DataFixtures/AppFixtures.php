@@ -3,23 +3,42 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Marques;
 use App\Entity\Voitures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    //gestion du hasher de password
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
 
     public function load(ObjectManager $manager): void
     {
         
         $faker = Factory::create('fr_FR');
+
+            //Création d'un admin
+            $admin = new User();
+            $admin->setEmail('admin@epse.be')
+                ->setRoles(['ROLE_ADMIN'])
+                ->setPassword($this->passwordHasher->hashPassword($admin,'password'));
+
+            $manager->persist($admin);
+
+            //Insertion des données pour les marques
             $marqueNom = array(
                 'audi' , 'BMW', 'Alfa Romeo', 'Fiat', 'Toyota', 'Seat', 'Volkswagen', 'Mercedes-Benz'
             );
             $marqueCover = array(
-                'images/L_Audi.png', 'images/L_BMW.png', 'images/L_Alfa Romeo.png', 'images/L_Fiat.png', 'images/L_Toyota.png', 'images/L_Seat.png', 'images/L_Volkswagen.png', 'images/L_Mercedes-Benz.png',
+                'images/marqueImg/L_Audi.png', 'images/marqueImg/L_BMW.png', 'images/marqueImg/L_Alfa Romeo.png', 'images/marqueImg/L_Fiat.png', 'images/marqueImg/L_Toyota.png', 'images/marqueImg/L_Seat.png', 'images/marqueImg/L_Volkswagen.png', 'images/marqueImg/L_Mercedes-Benz.png',
             );
         
         // Permettra d'afficher les différentes marques
@@ -50,9 +69,10 @@ class AppFixtures extends Fixture
                     ->setTransmission('arrière')
                     ->setAnneeCirculation( $faker->dateTimeBetween($startDate='-30years',$endDate='now'))
                     ->setNbProprio(rand(1,10))
-                    ->setDescription('<p>'.join( $faker->paragraphs(1)).'</p>')
-                    ->setOptionCar('<p>'.join( $faker->paragraphs(1)).'</p>')
-                    ->setIdMarque($marque);
+                    ->setDescription(join( $faker->paragraphs(1)))
+                    ->setOptionCar(join( $faker->paragraphs(1)))
+                    ->setIdMarque($marque)
+                    ->setcoverImg('cover.png');
 
                     $manager->persist($voiture); 
         }  

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container-fluid col-10 text-black text-center">
+        <div class="card mb-3 text-center">
+  <h3 class="card-header text-black text-center">{{voiture.modele}}</h3>
+  <div class="card-body">
+    <h4 class="card-subtitle text-muted">Détail de la voiture</h4>
+  </div>
+    <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block" width="60%" height="600" alt="">
+ 
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item display-1">Marque : {{voiture.idMarque.nom}}</li>
+    <li class="list-group-item">Modele : {{voiture.modele}}</li>
+    <li class="list-group-item">Kilomètrage: {{voiture.km}} km</li>
+    <li class="list-group-item">Prix : {{voiture.prix}} €</li>
+    <li class="list-group-item">Cylindrée : {{voiture.cylindree}} l</li>
+    <li class="list-group-item">Puissance : {{voiture.puissance}} Ch</li>
+    <li class="list-group-item">Carburant : {{voiture.carburant}}</li>
+    <li class="list-group-item">Transmission: {{voiture.transmission}}</li>
+    <li class="list-group-item">Date de mise en Circulation: {{voiture.anneeCirculation | date('d/m/Y')}}</li>
+    <li class="list-group-item">Nombre de propriétaires: {{voiture.nbProprio}}</li>
+    <li class="list-group-item">Description : {{voiture.description}}</li>
+    <li class="list-group-item">Options : {{voiture.optionCar}}</li>
+    
+  </ul>
+  
+  <div class="card-footer text-muted">
+    {{random(1,20)}} days ago
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
+    <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
+  </div>
+</div>
+    </div>
+
+
+{% endblock %}

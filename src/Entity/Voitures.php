@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use App\Repository\VoituresRepository;
 use App\Entity\Marques;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Voitures
 {
     #[ORM\Id]
@@ -23,6 +25,10 @@ class Voitures
 
     #[ORM\Column(length: 120)]
     private ?string $modele = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
 
     #[ORM\Column]
     private ?int $km = null;
@@ -57,9 +63,23 @@ class Voitures
     #[ORM\OneToMany(mappedBy: 'voitures', targetEntity: Images::class)]
     private Collection $images;
 
+    #[ORM\Column(length: 255)]
+    private ?string $coverImg = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeSlug() :void
+    {
+        if(empty($this->slug))
+        {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->modele);
+        }
     }
 
     public function getId(): ?int
@@ -90,7 +110,17 @@ class Voitures
 
         return $this;
     }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
 
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
     public function getKm(): ?int
     {
         return $this->km;
@@ -237,6 +267,18 @@ class Voitures
                 $image->setVoitures(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCoverImg(): ?string
+    {
+        return $this->coverImg;
+    }
+
+    public function setCoverImg(string $coverImg): self
+    {
+        $this->coverImg = $coverImg;
 
         return $this;
     }
