@@ -6,10 +6,11 @@
   <div class="card-body">
     <h4 class="card-subtitle text-muted">Détail de la voiture</h4>
   </div>
+        
     <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block" width="60%" height="600" alt="">
  
   <ul class="list-group list-group-flush">
-    <li class="list-group-item display-1">Marque : {{voiture.idMarque.nom}}</li>
+    <li class="list-group-item">Marque : {{voiture.Marque.nom}}</li>
     <li class="list-group-item">Modele : {{voiture.modele}}</li>
     <li class="list-group-item">Kilomètrage: {{voiture.km}} km</li>
     <li class="list-group-item">Prix : {{voiture.prix}} €</li>
@@ -36,5 +37,10 @@
 </div>
     </div>
 
+{% block javascripts %}
 
+    <script>
+        console.log('test enfant')
+    </script>
+{% endblock %}
 {% endblock %}

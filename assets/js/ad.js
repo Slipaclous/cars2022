@@ -1,25 +1,4 @@
-{% extends "base.html.twig" %}
 
-{% block title %}Création d'une voiture{% endblock %}
-{% form_theme myform 'ventes/_collection.html.twig' %}
-
-{% block body %}
-    <div class="container">
-        <h1>Création d'une nouvelle voiture</h1>
-        {{form_start(myform)}}
-            <div class="container">
-                <div>
-                    {{form_widget(myform)}}
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Création d'une voiture</button>
-        {{form_end(myform)}}
-    </div>
-{% endblock %}
-{% block javascripts %}
-{# {{ encore_entry_script_tags('app') }} #}
-    <script >
-        
 console.log('hello')
     const addImage = document.querySelector('#add_image')
 
@@ -63,7 +42,3 @@ const handleDeleteButtons = () => {
 
 updateCounter()
 handleDeleteButtons()
-
-    </script>
-{% endblock %}
-

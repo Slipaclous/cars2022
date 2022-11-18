@@ -71,7 +71,7 @@ class AppFixtures extends Fixture
                     ->setNbProprio(rand(1,10))
                     ->setDescription(join( $faker->paragraphs(1)))
                     ->setOptionCar(join( $faker->paragraphs(1)))
-                    ->setIdMarque($marque)
+                    ->setMarque($marque)
                     ->setcoverImg('cover.png');
 
                     $manager->persist($voiture); 

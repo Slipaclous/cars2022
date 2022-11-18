@@ -34,22 +34,42 @@ class VentesController extends AbstractController
 
     #[Route("/ventes/new", name:"ventes_new")]
     #[IsGranted("ROLE_ADMIN")]
-    public function create(Request $request,EntityManagerInterface $manager, MarquesRepository $repom,Marques $marques): Response
+    public function create(Request $request,EntityManagerInterface $manager, MarquesRepository $repom): Response
     {
-      $newVoiture = new Voitures();  
-      $form = $this->createForm(VoituresType::class, $newVoiture);
+      $voiture = new Voitures();  
+      $form = $this->createForm(VoituresType::class, $voiture);
       $form->handleRequest($request);
-      $manager->persist($newVoiture);
-      $manager->flush();
+      $manager->persist($voiture);
+    //   $manager->flush();
 
-        $this->addFlash(
-            'success',
-            "L'annonce <strong>{$newVoiture->getModele()}</strong> a bien été enregistrée!"
-        );
+        if($form->isSubmitted() && $form->isValid())
+        {   
+            foreach($voiture->getImages() as $images)
+            {
+                $images->setVoitures($voiture);
+                $manager->persist($images);
+            }
+                // $cover->setCoverImg($voiture);
+                // $manager->persist($cover);
+
+            $manager->persist($voiture);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "La voiture<strong>{$voiture->getModele()}</strong> a bien été enregistrée!"
+            );
+
+            return $this->redirectToRoute('ventes_show', [
+                'slug' => $voiture->getSlug()
+            ]);
+        }
   
-    return $this->redirectToRoute('ventes/new.html.twig', [
-        'slug' => $newVoiture->getSlug(),
-        // 'marques'=>$marques
+    return $this->render('ventes/new.html.twig', [
+        'myform' => $form->createView(),
+        
+        
+        
     ]);
     }
 

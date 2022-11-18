@@ -20,8 +20,7 @@ class Voitures
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?marques $marque = null;
+    private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
     private ?string $modele = null;
@@ -78,7 +77,7 @@ class Voitures
         if(empty($this->slug))
         {
             $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->modele);
+            $this->slug = $slugify->slugify($this->modele.'-'.rand(2000,8000000));
         }
     }
 
@@ -87,12 +86,12 @@ class Voitures
         return $this->id;
     }
 
-    public function getIdMarque(): ?marques
+    public function getMarque(): ?Marques
     {
         return $this->marque;
     }
 
-    public function setIdMarque(?marques $marque): self
+    public function setMarque(?Marques $marque): self
     {
         $this->marque = $marque;
 

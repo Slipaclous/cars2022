@@ -23,7 +23,7 @@ class Marques
     #[ORM\Column(type: Types::TEXT)]
     private ?string $cover = null;
 
-    #[ORM\OneToMany(mappedBy: 'marque_id', targetEntity: Voitures::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'marque', targetEntity: Voitures::class)]
     private Collection $voitures;
 
     public function __construct()
@@ -60,7 +60,7 @@ class Marques
         return $this;
     }
 
-    /**
+     /**
      * @return Collection<int, Voitures>
      */
     public function getVoitures(): Collection
@@ -72,7 +72,7 @@ class Marques
     {
         if (!$this->voitures->contains($voiture)) {
             $this->voitures->add($voiture);
-            $voiture->setIdMarque($this);
+            $voiture->setMarque($this);
         }
 
         return $this;
@@ -82,8 +82,8 @@ class Marques
     {
         if ($this->voitures->removeElement($voiture)) {
             // set the owning side to null (unless already changed)
-            if ($voiture->getIdMarque() === $this) {
-                $voiture->setIdMarque(null);
+            if ($voiture->getMarque() === $this) {
+                $voiture->setMarque(null);
             }
         }
 
