@@ -59,7 +59,7 @@ class Voitures
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $option_car = null;
 
-    #[ORM\OneToMany(mappedBy: 'voitures', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'voitures', targetEntity: Images::class, cascade:['persist'])]
     private Collection $images;
 
     #[ORM\Column(length: 255)]

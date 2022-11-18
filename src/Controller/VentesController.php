@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class VentesController extends AbstractController
 {
@@ -41,13 +42,34 @@ class VentesController extends AbstractController
       $form->handleRequest($request);
       $manager->persist($voiture);
     //   $manager->flush();
-
+       
         if($form->isSubmitted() && $form->isValid())
         {   
+            dd($form);
             foreach($voiture->getImages() as $images)
             {
                 $images->setVoitures($voiture);
                 $manager->persist($images);
+
+                
+            }
+
+            $file = $form['coverImg']->getData();
+            if(!empty($file))
+            {
+                $originalFilename = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin;Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename."-".uniqid().".".$file->guessExtension();
+                try{
+                    $file->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e)
+                {
+                    return $e->getMessage();
+                }
+                $voiture->setCoverImg($newFilename);
             }
                 // $cover->setCoverImg($voiture);
                 // $manager->persist($cover);

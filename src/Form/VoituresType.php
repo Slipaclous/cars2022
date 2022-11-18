@@ -2,15 +2,16 @@
 
 namespace App\Form;
 
+use App\Entity\Images;
 use App\Entity\Marques;
 use App\Entity\Voitures;
-use App\Entity\Images;
 
 
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -84,10 +85,19 @@ class VoituresType extends ApplicationType
                 
                 
             ])
+            // ->add('images', UrlType::class,[
+            //     'attr' => [
+            //         'placeholder' =>"URL de",
+            //         'multiple'=> true,
+            //         'mapped'=>false
+            //     ]
+            // ])
+           
             ->add(
                 'images',
                 CollectionType::class,
                 [
+                    
                     'entry_type' => ImageType::class,
                     'allow_add' => true, //Permet d'ajouter des éléments et surtout d'avoir data_prototype
                     'allow_delete' => true 
