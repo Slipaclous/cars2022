@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Images;
-use App\Entity\Marques;
+
 use App\Entity\Voitures;
 use App\Form\SearchType;
 use App\Form\VoituresType;
+use App\Form\VoituresModifyType;
 use App\Repository\ImagesRepository;
-use App\Repository\MarquesRepository;
 use App\Repository\VoituresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,6 +22,14 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class VentesController extends AbstractController
 {
+    /**
+     * Permet d'afficher les différentes voitures
+     *
+     * @param VoituresRepository $repo
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/ventes', name: 'ventespage')]
     public function index(VoituresRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
@@ -35,7 +43,13 @@ class VentesController extends AbstractController
             'voiture' => $voiture,
         ]);
     }
-
+    /**
+     * Permet d'ajouter une nouvelle voiture
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route("/ventes/new", name:"ventes_new")]
     #[IsGranted("ROLE_ADMIN")]
     public function create(Request $request,EntityManagerInterface $manager): Response
@@ -98,8 +112,14 @@ class VentesController extends AbstractController
         
     ]);
     }
-
-    #[Route('/ventes', name: 'ventespage')]
+    /**
+     * Permet de faire une recherche par mot clés
+     *
+     * @param Request $request
+     * @param VoituresRepository $repov
+     * @return void
+     */
+    #[Route('/ventes', name: 'ventespagesearch')]
     public function search(Request $request,VoituresRepository $repov)
     {
         $form = $this->createForm(SearchType::class);
@@ -109,40 +129,26 @@ class VentesController extends AbstractController
             'formsearch'=>$form->createView()
         ]);
     }
-
+    /**
+     * Permet de modifier une annonce
+     */
     #[Route("/ventes/{slug}/edit", name:'voiture_edit')]
     #[Security("is_granted('ROLE_ADMIN')", message:"Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")]
     public function edit(Request $request, EntityManagerInterface $manager, Voitures $voitures):Response
     {
-        $form = $this->createForm(VoituresType::class, $voitures);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
+        $fileName = $voitures->getCoverImg();
+        if(!empty($fileName))
         {
-            foreach($voitures->getImages() as $image)
-            {
-                $image->setVoitures($voitures);
-                $manager->persist($image);
-            }
-            $file = $form['coverImg']->getData();
-            if(!empty($file))
-            {
-                $originalFilename = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin;Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename."-".uniqid().".".$file->guessExtension();
-                try{
-                    $file->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                }catch(FileException $e)
-                {
-                    return $e->getMessage();
-                }
-                $voitures->setCoverImg($newFilename);
-            }
-                //$ad->setSlug("");
+            new File($this->getParameter('uploads_directory').'/'.$voitures->getCoverImg());
+        }
 
+        $form = $this->createForm(VoituresModifyType::class, $voitures);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {           
+                $voitures->setCoverImg($fileName);
+
+                $voitures->setSlug('');
                 $manager->persist($voitures);
                 $manager->flush();
 
@@ -157,15 +163,18 @@ class VentesController extends AbstractController
 
         return $this->renderForm("ventes/edit.html.twig",[
             
-            "form" => $form
+            "form" => $form,
+            "voitures"=>$voitures
         ]);
     }
-
+    /**
+     * Permet d'afficher une voiture
+     */
     #[Route('/ventes/{slug}', name:'ventes_show')]
     public function show(string $slug, Voitures $voiture,ImagesRepository $images):Response
     {
        $img = $images->findAll();
-        // dump($ad);
+       
 
         return $this->render('ventes/show.html.twig',[
             'voiture' => $voiture,

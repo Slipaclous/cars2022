@@ -13,8 +13,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    /**
+     * Permet d'afficher les marques
+     *
+     * @param MarquesRepository $repo
+     * @param VoituresRepository $repov
+     * @return Response
+     */
     #[Route('/', name: 'homepage')]
-    public function index(MarquesRepository $repo , VoituresRepository $repov): Response
+    public function index(MarquesRepository $repo): Response
     {
         $marque = $repo->findAll();
         
@@ -24,20 +31,9 @@ class HomeController extends AbstractController
            
         ]);
     }
-
-    // #[Route('/showall', name:'showall/{{marques.nom}}')]
-    // public function showAll(Request $request,MarquesRepository $repom,VoituresRepository $repov):Response
-    // {
-       
-    //     $marque = $repom->findAll();
-    //     $voiture = $repov->findAll();
-
-    //     return $this->render('home/allvoitures.html.twig', [
-    //         'marques' => $marque,
-    //         'voitures' => $voiture
-           
-    //     ]);
-    // }
+    /**
+     * Permet d'afficher toutes les voitures d'une seule marque
+     */
     #[Route('/marques/{id}', name: 'marques_show')]
     public function marquesShow(Marques $marques): Response
     {

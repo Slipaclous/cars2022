@@ -24,7 +24,7 @@ class Voitures
     private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
-    #[Assert\Length(min: 20, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
+    #[Assert\Length(min: 5, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 255)]
@@ -32,7 +32,7 @@ class Voitures
 
 
     #[ORM\Column]
-    #[Assert\Length(min: 20, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
+    // #[Assert\Length(min: 20, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
     private ?int $km = null;
 
     #[ORM\Column]
