@@ -1,19 +1,21 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Création d'une voiture{% endblock %}
-{% form_theme myform 'ventes/_collection.html.twig' %}
+{% form_theme form 'ventes/_collection.html.twig' %}
 
 {% block body %}
     <div class="container">
         <h1>Création d'une nouvelle voiture</h1>
-        {{form_start(myform)}}
+        {{form_start(form)}}
             <div class="container">
                 <div>
-                    {{form_widget(myform)}}
+                    {{form_widget(form)}}
+                        
                 </div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Création d'une voiture</button>
-        {{form_end(myform)}}
+            
+        {{form_end(form)}}
     </div>
 
      
@@ -22,7 +24,7 @@
 {# {{ encore_entry_script_tags('app') }} #}
     <script >
         
-console.log('hello')
+    console.log('hello')
     const addImage = document.querySelector('#add_image')
 
     addImage.addEventListener('click',()=>{

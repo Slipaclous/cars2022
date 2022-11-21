@@ -25,17 +25,25 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/showall', name:'showall')]
-    public function showAll(Request $request,MarquesRepository $repom,VoituresRepository $repov)
-    {
+    // #[Route('/showall', name:'showall/{{marques.nom}}')]
+    // public function showAll(Request $request,MarquesRepository $repom,VoituresRepository $repov):Response
+    // {
        
-        $marque = $repom->findAll();
-        $voiture = $repov->findAll();
+    //     $marque = $repom->findAll();
+    //     $voiture = $repov->findAll();
 
-        return $this->render('home/allvoitures.html.twig', [
-            'marques' => $marque,
-            'voitures' => $voiture
+    //     return $this->render('home/allvoitures.html.twig', [
+    //         'marques' => $marque,
+    //         'voitures' => $voiture
            
+    //     ]);
+    // }
+    #[Route('/marques/{id}', name: 'marques_show')]
+    public function marquesShow(Marques $marques): Response
+    {
+        return $this->render('home/allvoitures.html.twig',[
+            'marques' => $marques
         ]);
     }
+    
 }

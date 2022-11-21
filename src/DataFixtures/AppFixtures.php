@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Marques;
 use App\Entity\Voitures;
+use App\Entity\Images;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -35,7 +36,7 @@ class AppFixtures extends Fixture
 
             //Insertion des données pour les marques
             $marqueNom = array(
-                'audi' , 'BMW', 'Alfa Romeo', 'Fiat', 'Toyota', 'Seat', 'Volkswagen', 'Mercedes-Benz'
+                'Audi' , 'BMW', 'Alfa Romeo', 'Fiat', 'Toyota', 'Seat', 'Volkswagen', 'Mercedes-Benz'
             );
             $marqueCover = array(
                 'images/marqueImg/L_Audi.png', 'images/marqueImg/L_BMW.png', 'images/marqueImg/L_Alfa Romeo.png', 'images/marqueImg/L_Fiat.png', 'images/marqueImg/L_Toyota.png', 'images/marqueImg/L_Seat.png', 'images/marqueImg/L_Volkswagen.png', 'images/marqueImg/L_Mercedes-Benz.png',
@@ -52,7 +53,7 @@ class AppFixtures extends Fixture
             
 
             
-        
+                
        
         for ($j=0; $j < rand(1,4);$j++ )
         {
@@ -73,6 +74,13 @@ class AppFixtures extends Fixture
                     ->setOptionCar(join( $faker->paragraphs(1)))
                     ->setMarque($marque)
                     ->setcoverImg('cover.png');
+                    for($j=1; $j<= rand(2,5); $j++)
+                    {
+                        $image = new Images();
+                        $image->setLinkImg('https://picsum.photos/200/200')
+                            ->setVoitures($voiture);
+                        $manager->persist($image);    
+                    }       
 
                     $manager->persist($voiture); 
         }  

@@ -1,19 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container-fluid col-10 text-black text-center">
+
+    <div class="container-fluid  col-10 text-black text-center">
         <div class="card mb-3 text-center">
-  <h3 class="card-header text-black text-center">{{voiture.modele}}</h3>
-  <div class="card-body">
-    <h4 class="card-subtitle text-muted">Détail de la voiture</h4>
-  </div>
-        
-    <img src="https://picsum.photos/200/200" class="rounded mx-auto d-block" width="60%" height="600" alt="">
- 
+  <div class="card-body ">
+    
+    <div class="intro">
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{voiture.Marque.nom}} {{voiture.modele}}</li>
+        <li class="list-group-item">{{voiture.prix}} €</li>
+        </ul>
+
+                <img src="../images/coverimg/{{voiture.coverImg}}" class="" width="40%" height="400" alt="">
+            
+  </div>  
+            </div>  
+        </div>
+          
+     
+        <div class="galcontain">
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Marque : {{voiture.Marque.nom}}</li>
-    <li class="list-group-item">Modele : {{voiture.modele}}</li>
+    
     <li class="list-group-item">Kilomètrage: {{voiture.km}} km</li>
-    <li class="list-group-item">Prix : {{voiture.prix}} €</li>
     <li class="list-group-item">Cylindrée : {{voiture.cylindree}} l</li>
     <li class="list-group-item">Puissance : {{voiture.puissance}} Ch</li>
     <li class="list-group-item">Carburant : {{voiture.carburant}}</li>
@@ -24,16 +32,59 @@
     <li class="list-group-item">Options : {{voiture.optionCar}}</li>
     
   </ul>
+  <div class="container  " id="galerie">
+        <div class="row galimg ">
+            <div class="rounded mx-auto d-block  col-md-8 mb-3">
+
+                <div class="bd-example">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-indicators">
+                         {% for images in voiture.Images %}
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{loop.index0}}" {% if loop.first %} class="active" aria-current="true" {% endif %} aria-label="Slide {{loop.index}}"></button>
+                        {% endfor %} 
+                           
+                        </div>
+                        <div class="carousel-inner">
+                            {% for images in voiture.images %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{images.linkImg}}" class="d-block w-100" alt="image de {{voiture.modele}}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                         <h5>{{voiture.modele}}</h5>
+                                        
+                                    </div>
+                                </div>
+                            {% endfor %}
+                           
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            </div>
+            </div>
   
   <div class="card-footer text-muted">
     {{random(1,20)}} days ago
   </div>
 </div>
-<div class="card">
+<div class="card text-center">
   <div class="card-body">
     <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
     <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
   </div>
+  {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="btn btn-warning mx-2">Modification de l'annonce</a>
+                {# <a href="{{path('ads_delete',{'slug': ad.slug})}}" class="btn btn-danger mx-2">Supprimer l'annonce</a> #}
+            {% endif %}
 </div>
     </div>
 
@@ -41,6 +92,25 @@
 
     <script>
         console.log('test enfant')
+        $('.product-img--main')
+        // tile mouse actions
+        .on('mouseover', function(){
+          $(this).children('.product-img--main__image').css({'transform': 'scale('+ $(this).attr('data-scale') +')'});
+        })
+        .on('mouseout', function(){
+          $(this).children('.product-img--main__image').css({'transform': 'scale(1)'});
+        })
+        .on('mousemove', function(e){
+          $(this).children('.product-img--main__image').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
+        })
+        // tiles set up
+        .each(function(){
+          $(this)
+            // add a image container
+            .append('<div class="product-img--main__image"></div>')
+            // set up a background image for each tile based on data-image attribute
+            .children('.product-img--main__image').css({'background-image': 'url('+ $(this).attr('data-image') +')'});
+        });
     </script>
 {% endblock %}
 {% endblock %}

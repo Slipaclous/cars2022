@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Images;
+
 use App\Entity\Marques;
 use App\Entity\Voitures;
 
@@ -27,16 +27,18 @@ class VoituresType extends ApplicationType
     {
         $builder
             ->add('modele', TextType::class,[
-                'label'=>'Modèle',
+                'label'=>'Modèle :',
+                'required' => false,
+
                 'attr'=>[
                     'placeholder'=>"Nom de votre modèle"
                 ]
             ])
             ->add('slug', TextType::class, $this->getConfiguration('Slug', 'Adresse web (automatique)',[
-                'required' => false
+                'required' => false,
             ]))
-            ->add('km',IntegerType::class , $this->getConfiguration("Kilométrage","ex:56877 "))
-            ->add('prix',NumberType::class , $this->getConfiguration("Prix de la voiture","ex:9546,99"))
+            ->add('km',IntegerType::class , $this->getConfiguration("Kilométrage :","ex:56877 "),['required' => false])
+            ->add('prix',NumberType::class , $this->getConfiguration("Prix de la voiture","ex:9546,99"),['required' => false])
             ->add('cylindree', ChoiceType::class, [
                 'choices' => [
                     '1.6' =>'1.6',
@@ -46,9 +48,10 @@ class VoituresType extends ApplicationType
                 "attr" => [
                     'class' => 'form-control',
                 ],
-                "label" => "Cylindrée"
+                "label" => "Cylindrée :",
+                'required' => false,
             ])
-            ->add('puissance',IntegerType::class,$this->getConfiguration("Nombre de Ch","ex:98"))
+            ->add('puissance',IntegerType::class,$this->getConfiguration("Nombre de Ch","ex:98"),['required' => false])
             ->add('carburant', ChoiceType::class, [
                 'choices' => [
                     'Essence' =>'Essence',
@@ -58,7 +61,8 @@ class VoituresType extends ApplicationType
                 "attr" => [
                     'class' => 'form-control',
                 ],
-                "label" => "Carburant"
+                "label" => "Carburant :",
+                'required' => false,
             ])
             ->add('transmission', ChoiceType::class, [
                 'choices' => [
@@ -68,19 +72,21 @@ class VoituresType extends ApplicationType
                 "attr" => [
                     'class' => 'form-control',
                 ],
-                "label" => "Transmission"
+                "label" => "Transmission :",
+                'required' => false,
             ])
-            ->add('annee_circulation',DateType::class,$this->getConfiguration("Année de mise en circulation","ex:1988",["widget"=>"single_text"]))
-            ->add('nb_proprio',IntegerType::class , $this->getConfiguration("Nombre de propriétaires précédent","ex:7"))
-            ->add('description',TextareaType::class,$this->getConfiguration("Description","insérez un texte"))
-            ->add('option_car',TextareaType::class,$this->getConfiguration("Options de la voiture","..."))
+            ->add('annee_circulation',DateType::class,$this->getConfiguration("Année de mise en circulation :","ex:1988",["widget"=>"single_text"]),['required' => false])
+            ->add('nb_proprio',IntegerType::class , $this->getConfiguration("Nombre de propriétaires précédent :","ex:7"),['required' => false])
+            ->add('description',TextareaType::class,$this->getConfiguration("Description :","insérez un texte"),['required' => false])
+            ->add('option_car',TextareaType::class,$this->getConfiguration("Options de la voiture :","..."),['required' => false])
             ->add('coverImg', FileType::class, [
-                'label'=>"Avatar(jpg,png,gif)",
-                "required"=> true
+                'label'=>"Cover de la voiture :",
+                "required"=> false
             ])
             ->add('marque',EntityType::class,[
                 'class'=>Marques::class,
                 'choice_label'=>'nom',
+                'required' => false,
                 
                 
                 
@@ -93,16 +99,15 @@ class VoituresType extends ApplicationType
             //     ]
             // ])
            
-            ->add(
-                'images',
-                CollectionType::class,
-                [
-                    
-                    'entry_type' => ImageType::class,
-                    'allow_add' => true, //Permet d'ajouter des éléments et surtout d'avoir data_prototype
-                    'allow_delete' => true 
-                ]
-            )
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageType::class,
+
+                
+                'allow_add' => true, //Permet d'ajouter des éléments et surtout d'avoir data_prototype
+                'allow_delete' => true 
+                
+                
+            ])
         ;
     }
 

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -23,6 +24,7 @@ class Voitures
     private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
+    #[Assert\Length(min: 20, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 255)]
@@ -30,15 +32,19 @@ class Voitures
 
 
     #[ORM\Column]
+    #[Assert\Length(min: 20, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
     private ?int $km = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
     private ?float $cylindree = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
     private ?int $puissance = null;
 
     #[ORM\Column(length: 120)]

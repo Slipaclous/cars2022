@@ -16,6 +16,7 @@
             <a class="nav-link" href="{{path('ventespage')}}">Ventes</a>
           </li>
         </ul>
+       
         <ul class="navbar-nav ms-auto me-5 ">
                 {% if app.user %}
                       
@@ -44,9 +45,7 @@
       </div>
     </div>
   </nav>
-
-  {# {{ dump(app) }} #}
-  {# {% for label,messages in app.flashes %}
+{% for label,messages in app.flashes %}
     <div class="container">
       <div class="alert alert-{{label}}">
         {% for message in messages %}
@@ -54,4 +53,6 @@
         {% endfor %}
       </div>
     </div>
-  {% endfor %} #}
+  {% endfor %}
+  
+  

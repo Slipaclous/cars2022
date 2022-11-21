@@ -1,12 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for marque in marques %}
-        
-            <h1>coucou</h1>
-        {% endif %}
-        
-    {% endfor %}
+   
+                
+                
+                    {% for voitures in marques.voitures %}
+                        {% set url = path("ventes_show",{'slug':voitures.slug}) %}
+                        <div class="rounded mx-auto d-block mt-5 col-md-4 text-white">
+                        <div class="card card-car bg-primary mb-3">
+                            <div class="card-header text-center">
+                   
+                        
+                        <h3>{{voitures.Marque.nom}}</h3>
+                            
+                    
+                        
+                    
+                    <img src="../images/coverimg/{{voitures.coverImg}}" class="rounded mx-auto d-block" width="350" height="200" alt="Image de l'voiture" class="starsimg">
+                    <div class="card-body">
+                        <div class="card-title text-center">
+                            modele : <h4>{{voitures.modele}}</h4>
+                        </div>
+                        <p class="card-text">
+                            <p>-</strong>{{voitures.km}} km</p>
+                            <p>-Puissance : {{voitures.puissance}} CH</p>
+                            <p>-Carburant : {{voitures.carburant}}</p>
+                            <p>-Année : {{voitures.anneeCirculation | date('d/m/Y')}}</p>
+                            <p>-Prix : {{voitures.prix}} €</p>
+                        </p>
+                        <div class="text-center">
+                        <a href="{{url}}" class="btn btn-secondary">Découvrir la voiture</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                    {% endfor %}
+               
+                
 
     
 
