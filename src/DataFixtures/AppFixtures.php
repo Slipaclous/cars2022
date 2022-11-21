@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
                 'Audi' , 'BMW', 'Alfa Romeo', 'Fiat', 'Toyota', 'Seat', 'Volkswagen', 'Mercedes-Benz'
             );
             $marqueCover = array(
-                'images/marqueImg/L_Audi.png', 'images/marqueImg/L_BMW.png', 'images/marqueImg/L_Alfa Romeo.png', 'images/marqueImg/L_Fiat.png', 'images/marqueImg/L_Toyota.png', 'images/marqueImg/L_Seat.png', 'images/marqueImg/L_Volkswagen.png', 'images/marqueImg/L_Mercedes-Benz.png',
+                'images/marqueImg/L_Audi.png', 'images/marqueImg/L_BMW.png', 'images/marqueImg/L_Alfa Romeo.png', 'images/marqueImg/L_Fiat.png', 'images/marqueImg/Toyota.png', 'images/marqueImg/L_Seat.png', 'images/marqueImg/L_Volkswagen.png', 'images/marqueImg/L_Mercedes-Benz.png',
             );
         
         // Permettra d'afficher les différentes marques

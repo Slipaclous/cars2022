@@ -7,6 +7,7 @@ use App\Entity\Voitures;
 use App\Form\SearchType;
 use App\Form\VoituresType;
 use App\Form\VoituresModifyType;
+use App\Entity\VoituresImgModify;
 use App\Repository\ImagesRepository;
 use App\Repository\VoituresRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -62,7 +63,6 @@ class VentesController extends AbstractController
        
         if($form->isSubmitted() && $form->isValid())
         {   
-            dump((string) $form->getErrors(true, false));die;
             foreach($voiture->getImages() as $image){
 
                $image->setVoitures($voiture);
@@ -130,7 +130,7 @@ class VentesController extends AbstractController
         ]);
     }
     /**
-     * Permet de modifier une annonce
+     * Permet de modifier une annonce de voiture
      */
     #[Route("/ventes/{slug}/edit", name:'voiture_edit')]
     #[Security("is_granted('ROLE_ADMIN')", message:"Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier")]
@@ -181,5 +181,101 @@ class VentesController extends AbstractController
             'images'=> $img
             
         ]);
+    }
+    /**
+     * Permet de modifier l'image de l'utilisateur
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    // #[Route("/account/imgmodify", name:"account_modifimg")]
+    // #[IsGranted("ROLE_USER")]
+    // public function imgModify(Request $request, EntityManagerInterface $manager): Response
+    // {
+    //     $imgModify = new VoituresImgModify();
+    //     $voiture = $this->getVoitures(); 
+    //     $form = $this->createForm(ImgModifyType::class, $imgModify);
+    //     $form->handleRequest($request);
+
+    //     if($form->isSubmitted() && $form->isValid())
+    //     {
+    //         // supprimer l'image dans le dossier
+    //         if(!empty($voiture->getPicture()))
+    //         {
+    //             unlink($this->getParameter('uploads_directory').'/'.$voiture->getPicture());
+    //         }
+
+    //         $file = $form['newPicture']->getData();
+    //         if(!empty($file))
+    //         {
+    //             $originalFilename = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+    //             $safeFilename = transliterator_transliterate('Any-Latin;Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+    //             $newFilename = $safeFilename."-".uniqid().".".$file->guessExtension();
+    //             try{
+    //                 $file->move(
+    //                     $this->getParameter('uploads_directory'),
+    //                     $newFilename
+    //                 );
+    //             }catch(FileException $e)
+    //             {
+    //                 return $e->getMessage();
+    //             }
+    //             $voiture->setPicture($newFilename);
+    //         }
+
+    //         $manager->persist($voiture);
+    //         $manager->flush();
+
+    //         $this->addFlash(
+    //             'success',
+    //             'Votre avatar a bien été modifié'
+    //         );
+
+    //         return $this->redirectToRoute('account_index');
+
+    //     }
+
+    //     return $this->render("account/imgModify.html.twig",[
+    //         'myform' => $form->createView()
+    //     ]);
+    // }
+
+    /**
+     * Permet de supprimer une voiture
+     */
+    #[Route('/ventes/{slug}/delete', name:"voiture_delete")]
+    #[Security("(is_granted('ROLE_ADMIN'))",message:'Cette voitures ne vous appartient pas')]
+    public function delete(Voitures $voiture, EntityManagerInterface $manager): Response
+    {
+        if(!empty($voiture->getCoverImg()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$voiture->getCoverImg());
+            $voiture->setCoverImg('');
+
+            
+            
+            $manager->flush();
+           
+        }
+        
+        foreach($voiture->getImages() as $image){
+            
+            // $image->removeImage($voiture);
+            $manager->remove($image); 
+            
+            
+             
+         }
+
+        $this->addFlash(
+            'success',
+            "La voiture <strong>{$voiture->getModele()}</strong> a bien été supprimée"
+        );
+
+        $manager->remove($voiture);
+        $manager->flush();
+
+        return $this->redirectToRoute('ventespage');
     }
 }

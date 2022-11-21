@@ -86,6 +86,10 @@ class Voitures
             $this->slug = $slugify->slugify($this->modele.'-'.rand(2000,8000000));
         }
     }
+    // public function __toString()
+    // {
+    //     return $this -> modele;
+    // }
 
     public function getId(): ?int
     {

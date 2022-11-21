@@ -12,14 +12,14 @@
                     <img src="images/coverimg/{{voiture.coverImg}}" class="rounded mx-auto d-block" width="350" height="200" alt="Image de l'voiture" class="starsimg">
                     <div class="card-body">
                         <div class="card-title text-center">
-                            modele : <h4>{{voiture.modele}}</h4>
+                         <h4>{{voiture.modele}}</h4>
                         </div>
                         <p class="card-text">
                             <p>-</strong>{{voiture.km}} km</p>
                             <p>-Puissance : {{voiture.puissance}} CH</p>
                             <p>-Carburant : {{voiture.carburant}}</p>
                             <p>-Année : {{voiture.anneeCirculation | date('d/m/Y')}}</p>
-                            <p>-Prix : {{voiture.prix}} €</p>
+                            <h4 class="text-center">{{ voiture.prix|format_currency('EUR', locale='fr') }}</h4>
                         </p>
                         <div class="text-center">
                         <a href="{{url}}" class="btn btn-secondary">Découvrir la voiture</a>

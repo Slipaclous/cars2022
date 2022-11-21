@@ -8,7 +8,7 @@
     <div class="intro">
         <ul class="list-group list-group-flush">
         <li class="list-group-item">{{voiture.Marque.nom}} {{voiture.modele}}</li>
-        <li class="list-group-item">{{voiture.prix}} €</li>
+        <li class="list-group-item"> {{ voiture.prix|format_currency('EUR', locale='fr') }}</li>
         </ul>
 
                 <img src="../images/coverimg/{{voiture.coverImg}}" class="" width="40%" height="400" alt="">
@@ -32,11 +32,11 @@
     <li class="list-group-item">Options : {{voiture.optionCar}}</li>
     
   </ul>
-  <div class="container  " id="galerie">
-        <div class="row galimg ">
-            <div class="rounded mx-auto d-block  col-md-8 mb-3">
+  <div class="container" id="galerie">
+      
+            <div class="rounded mx-auto d-block  col-md-6 mb-3" >
 
-                <div class="bd-example">
+                <div class="bd-example "id="imgcar">
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
                         <div class="carousel-indicators">
                          {% for images in voiture.Images %}
@@ -46,7 +46,7 @@
                         </div>
                         <div class="carousel-inner">
                             {% for images in voiture.images %}
-                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <div class="carousel-item  {% if loop.first %}active{% endif %}">
                                     <img src="{{images.linkImg}}" class="d-block w-100" alt="image de {{voiture.modele}}">
                                     <div class="carousel-caption d-none d-md-block">
                                          <h5>{{voiture.modele}}</h5>
@@ -70,8 +70,13 @@
             </div>
             </div>
             </div>
-            </div>
-  
+          
+  <div class="gestion">
+  {% if ( is_granted('ROLE_ADMIN')) %}
+            <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="btn btn-warning mx-2">Modification de l'annonce</a>
+                  <a href="{{path('voiture_delete',{'slug': voiture.slug})}}" class="btn btn-danger mx-2">Supression de l'annonce</a>
+          </div>
+          {% endif %}
   <div class="card-footer text-muted">
     {{random(1,20)}} days ago
   </div>
@@ -81,36 +86,17 @@
     <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
     <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
   </div>
+  </div>
   {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="btn btn-warning mx-2">Modification de l'annonce</a>
-                {# <a href="{{path('ads_delete',{'slug': ad.slug})}}" class="btn btn-danger mx-2">Supprimer l'annonce</a> #}
+          
+                
+                
             {% endif %}
-</div>
+
     </div>
 
 {% block javascripts %}
 
-    <script>
-        console.log('test enfant')
-        $('.product-img--main')
-        // tile mouse actions
-        .on('mouseover', function(){
-          $(this).children('.product-img--main__image').css({'transform': 'scale('+ $(this).attr('data-scale') +')'});
-        })
-        .on('mouseout', function(){
-          $(this).children('.product-img--main__image').css({'transform': 'scale(1)'});
-        })
-        .on('mousemove', function(e){
-          $(this).children('.product-img--main__image').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
-        })
-        // tiles set up
-        .each(function(){
-          $(this)
-            // add a image container
-            .append('<div class="product-img--main__image"></div>')
-            // set up a background image for each tile based on data-image attribute
-            .children('.product-img--main__image').css({'background-image': 'url('+ $(this).attr('data-image') +')'});
-        });
-    </script>
+   
 {% endblock %}
 {% endblock %}
