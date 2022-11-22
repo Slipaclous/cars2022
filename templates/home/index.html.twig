@@ -6,40 +6,43 @@
 <style>
 </style>
 <div class="container-fluid col-10">
-     <div class="main">
-  <h1 class="main-heading">
-    <span class="main-heading-primary">Bienvenue</span>
-    <span class="main-heading-secondary">sur cars 2022</span>
-    <span class="main-heading-tercary">Découvrez nos marques </span>
-  </h1>
-</div>
+    <div class="main">
+        <h1 class="main-heading">
+            <span class="main-heading-primary">Bienvenue</span>
+            <span class="main-heading-secondary">sur cars 2022</span>
+            <span class="main-heading-tercary">Découvrez nos marques </span>
+        </h1>
+    </div>
 
-<div class="row">
-    {% for marque in marques %}
-    {# {% set url =  %} #}
-    
-            <div class="col-md-3 text-white">
-                <div class="card bg-dark mb-5">
-                    <div class="card-header text-center">
-                        <h3>{{marque.nom}}</h3> 
+    <div class="row">
+        {% for marque in marques %}
+        {# {% set url =  %} #}
+
+        <div class="col-md-3 text-white">
+            <div class="card bg-dark mb-5">
+                <div class="card-header text-center">
+                    <h3>{{marque.nom}}</h3>
+                </div>
+                <img src="{{marque.cover}}" class="rounded mx-auto d-block" width="150" height="150"
+                    alt="Image de la marque" class="starsimg">
+                <div class="card-body">
+                    <div class="card-title text-center">
+                        Notre gamme <h4>{{marque.nom}}</h4>
                     </div>
-                    <img src="{{marque.cover}}" class="rounded mx-auto d-block" width="150" height="150" alt="Image de la marque" class="starsimg">
-                    <div class="card-body">
-                        <div class="card-title text-center">
-                            Notre gamme <h4>{{marque.nom}}</h4>
-                        </div>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, earum modi! Dolorem at exercitationem sapiente optio aliquam blanditiis.
-                        </p>
-                        <div class="text-center">
-                        <a href="{{ path('marques_show', {id: marque.id} ) }}" class="btn btn-secondary">Découvrire les voitures</a>
-                        </div>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, earum modi! Dolorem at
+                        exercitationem sapiente optio aliquam blanditiis.
+                    </p>
+                    <div class="text-center">
+                        <a href="{{ path('marques_show', {id: marque.id} ) }}" class="btn btn-secondary">Découvrire les
+                            voitures</a>
                     </div>
                 </div>
-            </div>  
-        
-     
-    {% endfor %}
+            </div>
+        </div>
+
+
+        {% endfor %}
     </div>
-    </div>
+</div>
 {% endblock %}

@@ -1,28 +1,29 @@
 {% set url = path("ventes_show",{'slug':voiture.slug}) %}
 <div class="col-md-4 text-white">
-                <div class="card card-car bg-primary mb-3">
-                    <div class="card-header text-center">
-                   
-                        
-                        <h3>{{voiture.Marque.nom}}</h3>
-                            
-                    
-                        
-                    </div>
-                    <img src="images/coverimg/{{voiture.coverImg}}" class="rounded mx-auto d-block" width="350" height="200" alt="Image de l'voiture" class="starsimg">
-                    <div class="card-body">
-                        <div class="card-title text-center">
-                         <h4>{{voiture.modele}}</h4>
-                        </div>
-                        <p class="card-text">
-                            <p>-</strong>{{voiture.km}} km</p>
-                            <p>-Puissance : {{voiture.puissance}} CH</p>
-                            <p>-Carburant : {{voiture.carburant}}</p>
-                            <p>-Année : {{voiture.anneeCirculation | date('d/m/Y')}}</p>
-                            <h4 class="text-center">{{ voiture.prix|format_currency('EUR', locale='fr') }}</h4>
-                        </p>
-                        <div class="text-center">
-                        <a href="{{url}}" class="btn btn-secondary">Découvrir la voiture</a>
-                        </div>
-                    </div>
-                </div>
+    <div class="card card-car bg-primary mb-3">
+        <div class="card-header text-center">
+
+
+            <h3>{{voiture.Marque.nom}}</h3>
+
+
+
+        </div>
+        <img src="images/coverimg/{{voiture.coverImg}}" class="rounded mx-auto d-block" width="350" height="200"
+            alt="Image de l'voiture" class="starsimg">
+        <div class="card-body">
+            <div class="card-title text-center">
+                <h4>{{voiture.modele}}</h4>
+            </div>
+            <p class="card-text">
+                <p>-</strong>{{voiture.km}} km</p>
+                <p>-Puissance : {{voiture.puissance}} CH</p>
+                <p>-Carburant : {{voiture.carburant}}</p>
+                <p>-Année : {{voiture.anneeCirculation | date('d/m/Y')}}</p>
+                <h4 class="text-center">{{ voiture.prix|format_currency('EUR', locale='fr') }}</h4>
+            </p>
+            <div class="text-center">
+                <a href="{{url}}" class="btn btn-secondary">Découvrir la voiture</a>
+            </div>
+        </div>
+    </div>

@@ -11,6 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class ImageType extends AbstractType
 {
+    /**
+     * Extension du formulaire d'ajout pour les images de la voiture
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

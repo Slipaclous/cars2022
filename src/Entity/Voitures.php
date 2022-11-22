@@ -24,7 +24,7 @@ class Voitures
     private ?Marques $marque = null;
 
     #[ORM\Column(length: 120)]
-    #[Assert\Length(min: 5, max: 110, minMessage: "L'introduction doit faire plus de 20 caractères", maxMessage:"L'introduction ne doit pas faire plus de 255 caractères")]
+    #[Assert\Length(min: 5, max: 110, minMessage: "Le modèle doit faire plus de 5 caractères", maxMessage:"Le modèlen ne doit pas faire plus de 120 caractères")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 255)]
@@ -36,15 +36,15 @@ class Voitures
     private ?int $km = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
+    
     private ?float $prix = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
+    
     private ?float $cylindree = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Vous devez renseigner votre ancien mot de passe")]
+  
     private ?int $puissance = null;
 
     #[ORM\Column(length: 120)]
@@ -60,6 +60,7 @@ class Voitures
     private ?int $nb_proprio = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 100, minMessage:"Votre description doit faire plus de 100 caractères")]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

@@ -6,19 +6,19 @@
 {% form_theme form 'ventes/_collection.html.twig' %}
 
 {% block body %}
+<div class="container">
+    <h1>Modification de l'annonce : {{voitures.modele}}</h1>
+    {{form_start(form)}}
     <div class="container">
-        <h1>Modification de l'annonce : {{voitures.modele}}</h1>
-        {{form_start(form)}}
-            <div class="container">
-                <div>
-                    {{form_widget(form)}}
-                </div>
-            </div>
-            <button type="submit" class="btn btn-warning mt-3">Modifier</button>
-        {{form_end(form)}}
+        <div>
+            {{form_widget(form)}}
+        </div>
     </div>
+    <button type="submit" class="btn btn-warning mt-3">Modifier</button>
+    {{form_end(form)}}
+</div>
 {% endblock %}
 
 {% block javascripts %}
-   {# {{encore_entry_script_tags('annonce')}} #}
+{# {{encore_entry_script_tags('annonce')}} #}
 {% endblock %}

@@ -183,7 +183,7 @@ class VentesController extends AbstractController
         ]);
     }
     /**
-     * Permet de modifier l'image de l'utilisateur
+     * Permet de modifier l'image de la voiture
      *
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -261,10 +261,7 @@ class VentesController extends AbstractController
         
         foreach($voiture->getImages() as $image){
             
-            // $image->removeImage($voiture);
-            $manager->remove($image); 
-            
-            
+            $manager->remove($image);   
              
          }
 

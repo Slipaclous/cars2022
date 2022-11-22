@@ -5,38 +5,38 @@
 {% block body %}
 <div class="container-fluid col-8">
   {# {{form((formsearch))}} #}
-     <div class="main">
-  <h1 class="main-heading">
-    
-    <span class="main-heading-tercary">Nos ventes  </span>
-  </h1>
+  <div class="main">
+    <h1 class="main-heading">
+
+      <span class="main-heading-tercary">Nos ventes </span>
+    </h1>
+  </div>
+
+
+
+  {# for marque #}
+  <div class="row">
+
+
+
+    {% for voiture in voiture %}
+
+    {% include "ventes/_vente.html.twig" %}
+
+  </div>
+  {% endfor %}
+  <div class="navigation d-flex justify-content-center">
+  </div>
+
+  {{knp_pagination_render(voiture)}}
+
+
 </div>
 
 
-    
-    {# for marque #}
-    <div class="row">
-   
-        
-    
-    {% for voiture in voiture %}
-
-        {% include "ventes/_vente.html.twig" %}
-            
-            </div> 
-    {% endfor %}
-        <div class="navigation d-flex justify-content-center">
-        </div>
- 
-            {{knp_pagination_render(voiture)}}
-     
-    
-    </div>
-    
-        
 
 
-        
-</div>            
+
+</div>
 
 {% endblock %}

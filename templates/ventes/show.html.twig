@@ -1,66 +1,70 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    <div class="container-fluid  col-10 text-black text-center">
-        <div class="card mb-3 text-center">
-  <div class="card-body ">
-    
-    <div class="intro">
-        <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{voiture.Marque.nom}} {{voiture.modele}}</li>
-        <li class="list-group-item"> {{ voiture.prix|format_currency('EUR', locale='fr') }}</li>
-        </ul>
+<div class="container-fluid  col-10 text-black text-center">
+    <div class="card mb-3 text-center">
+        <div class="card-body ">
+
+            <div class="intro">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{voiture.Marque.nom}} {{voiture.modele}}</li>
+                    <li class="list-group-item"> {{ voiture.prix|format_currency('EUR', locale='fr') }}</li>
+                </ul>
 
                 <img src="../images/coverimg/{{voiture.coverImg}}" class="" width="40%" height="400" alt="">
-            
-  </div>  
-            </div>  
-        </div>
-          
-     
-        <div class="galcontain">
-  <ul class="list-group list-group-flush">
-    
-    <li class="list-group-item">Kilomètrage: {{voiture.km}} km</li>
-    <li class="list-group-item">Cylindrée : {{voiture.cylindree}} l</li>
-    <li class="list-group-item">Puissance : {{voiture.puissance}} Ch</li>
-    <li class="list-group-item">Carburant : {{voiture.carburant}}</li>
-    <li class="list-group-item">Transmission: {{voiture.transmission}}</li>
-    <li class="list-group-item">Date de mise en Circulation: {{voiture.anneeCirculation | date('d/m/Y')}}</li>
-    <li class="list-group-item">Nombre de propriétaires: {{voiture.nbProprio}}</li>
-    <li class="list-group-item">Description : {{voiture.description}}</li>
-    <li class="list-group-item">Options : {{voiture.optionCar}}</li>
-    
-  </ul>
-  <div class="container" id="galerie">
-      
-            <div class="rounded mx-auto d-block  col-md-6 mb-3" >
 
-                <div class="bd-example "id="imgcar">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="galcontain">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">Kilomètrage: {{voiture.km}} km</li>
+            <li class="list-group-item">Cylindrée : {{voiture.cylindree|number_format(2)}} l</li>
+            <li class="list-group-item">Puissance : {{voiture.puissance}} Ch</li>
+            <li class="list-group-item">Carburant : {{voiture.carburant}}</li>
+            <li class="list-group-item">Transmission: {{voiture.transmission}}</li>
+            <li class="list-group-item">Date de mise en Circulation: {{voiture.anneeCirculation | date('d/m/Y')}}</li>
+            <li class="list-group-item">Nombre de propriétaires: {{voiture.nbProprio}}</li>
+            <li class="list-group-item">Description : {{voiture.description}}</li>
+            <li class="list-group-item">Options : {{voiture.optionCar}}</li>
+
+        </ul>
+        <div class="container" id="galerie">
+
+            <div class="rounded mx-auto d-block  col-md-6 mb-3">
+
+                <div class="bd-example " id="imgcar">
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
                         <div class="carousel-indicators">
-                         {% for images in voiture.Images %}
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{loop.index0}}" {% if loop.first %} class="active" aria-current="true" {% endif %} aria-label="Slide {{loop.index}}"></button>
-                        {% endfor %} 
-                           
+                            {% for images in voiture.Images %}
+                            <button type="button" data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide-to="{{loop.index0}}" {% if loop.first %} class="active"
+                                aria-current="true" {% endif %} aria-label="Slide {{loop.index}}"></button>
+                            {% endfor %}
+
                         </div>
                         <div class="carousel-inner">
                             {% for images in voiture.images %}
-                                <div class="carousel-item  {% if loop.first %}active{% endif %}">
-                                    <img src="{{images.linkImg}}" class="d-block w-100" alt="image de {{voiture.modele}}">
-                                    <div class="carousel-caption d-none d-md-block">
-                                         <h5>{{voiture.modele}}</h5>
-                                        
-                                    </div>
+                            <div class="carousel-item  {% if loop.first %}active{% endif %}">
+                                <img src="{{images.linkImg}}" class="d-block w-100" alt="image de {{voiture.modele}}">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{voiture.modele}}</h5>
+
                                 </div>
+                            </div>
                             {% endfor %}
-                           
+
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
@@ -68,35 +72,37 @@
                 </div>
 
             </div>
-            </div>
-            </div>
-          
-  <div class="gestion">
-  {% if ( is_granted('ROLE_ADMIN')) %}
-            <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="btn btn-warning mx-2">Modification de l'annonce</a>
-                  <a href="{{path('voiture_delete',{'slug': voiture.slug})}}" class="btn btn-danger mx-2">Supression de l'annonce</a>
-          </div>
-          {% endif %}
-  <div class="card-footer text-muted">
-    {{random(1,20)}} days ago
-  </div>
+        </div>
+    </div>
+
+    <div class="gestion">
+        {% if ( is_granted('ROLE_ADMIN')) %}
+        <a href="{{path('voiture_edit',{'slug': voiture.slug})}}" class="btn btn-warning mx-2">Modification de
+            l'annonce</a>
+        <a href="{{path('voiture_delete',{'slug': voiture.slug})}}" class="btn btn-danger mx-2">Supression de
+            l'annonce</a>
+    </div>
+    {% endif %}
+    <div class="card-footer text-muted">
+        {{random(1,20)}} days ago
+    </div>
 </div>
 <div class="card text-center">
-  <div class="card-body">
-    <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
-    <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
-  </div>
-  </div>
-  {% if is_granted('ROLE_ADMIN') %}
-          
-                
-                
-            {% endif %}
-
+    <div class="card-body">
+        <a href="{{path('ventespage')}}" class="card-link">Retourner à nos ventes</a>
+        <a href="{{path('homepage')}}" class="card-link">Retour à l'accueil</a>
     </div>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+
+
+
+{% endif %}
+
+</div>
 
 {% block javascripts %}
 
-   
+
 {% endblock %}
 {% endblock %}

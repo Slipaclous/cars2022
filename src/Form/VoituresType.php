@@ -23,6 +23,13 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class VoituresType extends ApplicationType
 {
+    /**
+     * Formulaire d'ajout de voitures
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -41,9 +48,9 @@ class VoituresType extends ApplicationType
             ->add('prix',NumberType::class , $this->getConfiguration("Prix de la voiture","ex:9546,99"),['required' => false])
             ->add('cylindree', ChoiceType::class, [
                 'choices' => [
-                    '1.6' =>'1.6',
-                    '1.8' => '1.8',
-                    '2.6' => '2.6',
+                    '1.6' =>'1,6',
+                    '1.8' => '1,8',
+                    '2.6' => '2,6',
                 ],
                 "attr" => [
                     'class' => 'form-control',
