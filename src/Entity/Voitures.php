@@ -36,15 +36,12 @@ class Voitures
     private ?int $km = null;
 
     #[ORM\Column]
-    
     private ?float $prix = null;
 
     #[ORM\Column]
-    
     private ?float $cylindree = null;
 
     #[ORM\Column]
-  
     private ?int $puissance = null;
 
     #[ORM\Column(length: 120)]
@@ -155,12 +152,12 @@ class Voitures
         return $this;
     }
 
-    public function getCylindree(): ?int
+    public function getCylindree(): ?float
     {
         return $this->cylindree;
     }
 
-    public function setCylindree(int $cylindree): self
+    public function setCylindree(float $cylindree): self
     {
         $this->cylindree = $cylindree;
 
